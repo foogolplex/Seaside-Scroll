@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Luxurious+Script&family=Ubuntu:wght@300&display=swap');
+
 .App {
   text-align: center;
 }
@@ -13,8 +15,12 @@
   }
 }
 
+#Header {
+  font-family: 'Luxurious Script', cursive;
+}
+
 .App-header {
-  background-color: #282c34;
+  
   min-height: 100vh;
   display: flex;
   flex-direction: column;

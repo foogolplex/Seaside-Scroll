@@ -1,23 +1,50 @@
-import logo from './logo.svg';
 import './App.css';
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import FOG from 'vanta/dist/vanta.fog.min'
+import {useEffect, useState, useRef} from 'react';
 
 function App() {
+  const [vantaEffect, setVantaEffect] = useState(0)
+  const myRef = useRef(null)
+  useEffect(() => {
+    if (!vantaEffect) {
+      setVantaEffect(FOG({
+        el: myRef.current,
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        highlightColor: 0xdcd2bc,
+        midtoneColor: 0x8e99e6,
+        lowlightColor: 0x573aeb,
+        baseColor: 0xe3b9b9,
+        blurFactor: 0.24,
+        speed: 1.70,
+        zoom: 1.20
+      }))
+    }
+    return () => {
+      if (vantaEffect) vantaEffect.destroy()
+    }
+  }, [vantaEffect]) 
   return (
-    <div className="App">
+    <div className="App" ref={myRef}>
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1 className="display-1">Seaside Scroll</h1>
+        <h3 className="display-5">By Alex Kirzhnev</h3>
+         
+        <Button href="chapter-1" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 1</Button> 
+        <Button href="chapter-2" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 2</Button>
+        <Button href="chapter-3" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 3</Button> 
+        <Button href="chapter-4" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 4</Button>
+        <Button href="chapter-5" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 5</Button> 
+        <Button href="chapter-6" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 6</Button>
+        <Button href="chapter-7" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 7</Button> 
+        <Button href="chapter-8" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 8</Button>  
       </header>
+      
     </div>
   );
 }
