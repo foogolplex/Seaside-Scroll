@@ -35,14 +35,7 @@ function App() {
         <h1 className="display-1">Seaside Scroll</h1>
         <h3 className="display-5">By Alex Kirzhnev</h3>
          
-        <Button href="chapter-1" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 1</Button> 
-        <Button href="chapter-2" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 2</Button>
-        <Button href="chapter-3" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 3</Button> 
-        <Button href="chapter-4" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 4</Button>
-        <Button href="chapter-5" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 5</Button> 
-        <Button href="chapter-6" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 6</Button>
-        <Button href="chapter-7" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 7</Button> 
-        <Button href="chapter-8" size="lg" style={{marginTop: "20px"}} variant="outline-light">Chapter 8</Button>  
+        <Button href="story" size="lg" style={{marginTop: "20px"}} variant="outline-light">Begin</Button>  
       </header>
       
     </div>
