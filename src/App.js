@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FOG from 'vanta/dist/vanta.fog.min'
 import {useEffect, useState, useRef} from 'react';
+// eslint-disable-next-line
 import { Link, animateScroll as scroll } from "react-scroll";
 import { ReactReader } from 'react-reader';
 
