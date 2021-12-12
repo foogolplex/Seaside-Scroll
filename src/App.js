@@ -2,11 +2,34 @@ import './App.css';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FOG from 'vanta/dist/vanta.fog.min'
-import {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 // eslint-disable-next-line
 import { Link, animateScroll as scroll } from "react-scroll";
-import { ReactReader } from 'react-reader';
+import { ReactReader, ReactReaderStyle } from 'react-reader';
 
+var mode = 'light';
+// eslint-disable-next-line
+var state = false;
+
+const ownStyles = {
+  ...ReactReaderStyle,
+  readerArea: {
+    ...ReactReaderStyle.readerArea,
+    backgroundColor: '#282828'
+  },
+   body: {
+     ...ReactReaderStyle.body,
+                  "background": "#282828 !important" 
+                },
+                p: {
+                  ...ReactReaderStyle.p, 
+                  color: 'white !important', 
+                },
+                span: {
+                  ...ReactReaderStyle.span,
+                  color: 'white !important', 
+                },  
+}
 function App() {
   const [vantaEffect, setVantaEffect] = useState(0)
   const myRef = useRef(null)
@@ -37,6 +60,19 @@ function App() {
       if (vantaEffect) vantaEffect.destroy()
     }
   }, [vantaEffect]) 
+  const [size, setSize] = useState(100)
+  const renditionRef = useRef(null)
+  const changeSize = (newSize) => {
+    setSize(newSize)
+  } 
+  useEffect(() => {
+    if (renditionRef.current) {
+      renditionRef.current.themes.default({ 
+        "img": { "font-size": `${size}% !important`},
+        "span" : { "font-size": `${size}% !important`}
+      }) 
+    }
+  }, [size]) 
   return (
     <div className="App" ref={myRef}>
       <header className="App-header">
@@ -44,22 +80,58 @@ function App() {
         <h3 className="display-5">By Alex Kirzhnev</h3>
         
         <Link
-    activeClass="active"
-    to="start"
-    spy={true}
-    smooth={true}
-    offset={0}
-    duration={10}
+          activeClass="active"
+          to="start"
+          spy={true}
+          smooth={true}
+          offset={0}
+          duration={10}
         >
         <Button size="lg" style={{marginTop: "20px"}} variant="outline-light">Begin</Button> 
         </Link>
       </header>
-      <div style={{ height: "100vh" }} className="start">
-      <ReactReader
-        location={location}
-        locationChanged={locationChanged}
-        url="/SeasideScroll.epub"
-      />
+      <div style={{ height: "100vh", backgroundColor: "black", background: "black"}} className="start">
+        <ReactReader
+          location={location}
+          locationChanged={locationChanged}
+          url="/SeasideScroll.epub"
+          epubOptions={{
+            flow: "scrolled",
+            manager: "continuous" 
+          }}
+          showToc={false}
+          styles={ownStyles}
+          getRendition={(rendition) => { 
+              rendition.themes.default({
+                "div": {
+                  backgroundColor: "black !important"
+                },
+                container: {
+                  backgroundColor: "black !important"
+                }, 
+                readerArea: {
+                  "background-color": "#000", 
+                  backgroundColor: "#000"
+                }, 
+                body: {
+                  "background": "#282828 !important" 
+                },
+                p: { 
+                  color: 'white !important', 
+                },
+                span: {
+                  color: 'white !important', 
+                }, 
+              }) 
+              renditionRef.current = rendition 
+              console.log(rendition.themes)
+          }}
+        />
+    </div>
+    <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'left', zIndex: 1}}>
+        <Button variant={"outline-"+mode} onClick={() => changeSize(Math.max(80, size - 10))}>-</Button> 
+        <Button variant={"outline-"+mode} onClick={() => changeSize(Math.min(130, size + 10))}>+</Button>
+        <Button variant={"outline-"+mode}>{mode}</Button>
     </div>
     </div>
   );
