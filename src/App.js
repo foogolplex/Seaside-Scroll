@@ -7,9 +7,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import { Link, animateScroll as scroll } from "react-scroll";
 import { ReactReader, ReactReaderStyle } from 'react-reader';
 
-var mode = 'light';
-// eslint-disable-next-line
-var state = false;
+var mode = "light";
 
 const ownStyles = {
   ...ReactReaderStyle,
@@ -94,11 +92,7 @@ function App() {
         <ReactReader
           location={location}
           locationChanged={locationChanged}
-          url="/SeasideScroll.epub"
-          epubOptions={{
-            flow: "scrolled",
-            manager: "continuous" 
-          }}
+          url="/SeasideScroll.epub" 
           showToc={false}
           styles={ownStyles}
           getRendition={(rendition) => { 
@@ -128,11 +122,10 @@ function App() {
           }}
         />
     </div>
-    <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'left', zIndex: 1}}>
-        <Button variant={"outline-"+mode} onClick={() => changeSize(Math.max(80, size - 10))}>-</Button> 
-        <Button variant={"outline-"+mode} onClick={() => changeSize(Math.min(130, size + 10))}>+</Button>
-        <Button variant={"outline-"+mode}>{mode}</Button>
-    </div>
+      <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'left', zIndex: 1}}>
+          <Button variant={"outline-"+mode} onClick={() => changeSize(Math.max(80, size - 10))}>-</Button> 
+          <Button variant={"outline-"+mode} onClick={() => changeSize(Math.min(130, size + 10))}>+</Button> 
+      </div>
     </div>
   );
 }
