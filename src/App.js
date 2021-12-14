@@ -7,28 +7,54 @@ import React, {useEffect, useState, useRef} from 'react';
 import { Link, animateScroll as scroll } from "react-scroll";
 import { ReactReader, ReactReaderStyle } from 'react-reader';
 
-var mode = "light";
-
-const ownStyles = {
+let ownStyles = {
   ...ReactReaderStyle,
   readerArea: {
     ...ReactReaderStyle.readerArea,
-    backgroundColor: '#282828'
+    backgroundColor: 'white'
   },
-   body: {
-     ...ReactReaderStyle.body,
-                  "background": "#282828 !important" 
-                },
-                p: {
-                  ...ReactReaderStyle.p, 
-                  color: 'white !important', 
-                },
-                span: {
-                  ...ReactReaderStyle.span,
-                  color: 'white !important', 
-                },  
+  
 }
+
 function App() {
+  const [mode, setMode] = useState('dark')
+  const [buttonMode, setButtonMode] = useState('dark') 
+  var changeMode = () => {
+    console.log(mode);
+    if(mode === 'light' && renditionRef.current){
+      ownStyles.readerArea.backgroundColor = 'white'
+      renditionRef.current.themes.default({
+          body: {
+            "background": "white !important"
+          },
+          p: { 
+            color: 'black !important', 
+          },
+          span: {
+            color: 'black !important', 
+          },
+      })
+      setButtonMode('dark')
+      setMode('dark'); 
+    }
+    else if(mode === 'dark' && renditionRef.current){
+      ownStyles.readerArea.backgroundColor = '#282828'
+      renditionRef.current.themes.default({
+          body: {
+            "background": "#282828 !important"
+          },
+          p: { 
+            color: 'white !important', 
+          },
+          span: {
+            color: 'white !important', 
+          },
+      })
+      setButtonMode('light'); 
+      setMode('light');
+    }
+    console.log(mode);
+  } 
   const [vantaEffect, setVantaEffect] = useState(0)
   const myRef = useRef(null)
   const [location, setLocation] = useState(null);
@@ -68,9 +94,9 @@ function App() {
       renditionRef.current.themes.default({ 
         "img": { "font-size": `${size}% !important`},
         "span" : { "font-size": `${size}% !important`}
-      }) 
-    }
-  }, [size]) 
+      })
+      
+  }},[size]) 
   return (
     <div className="App" ref={myRef}>
       <header className="App-header">
@@ -95,36 +121,24 @@ function App() {
           url="/SeasideScroll.epub" 
           showToc={false}
           styles={ownStyles}
-          getRendition={(rendition) => { 
-              rendition.themes.default({
-                "div": {
-                  backgroundColor: "black !important"
-                },
-                container: {
-                  backgroundColor: "black !important"
-                }, 
-                readerArea: {
-                  "background-color": "#000", 
-                  backgroundColor: "#000"
-                }, 
-                body: {
-                  "background": "#282828 !important" 
-                },
-                p: { 
-                  color: 'white !important', 
-                },
-                span: {
-                  color: 'white !important', 
-                }, 
-              }) 
-              renditionRef.current = rendition 
-              console.log(rendition.themes)
+          getRendition={(rendition) => {  
+              renditionRef.current = rendition  
           }}
         />
-    </div>
+      </div>
       <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'left', zIndex: 1}}>
-          <Button variant={"outline-"+mode} onClick={() => changeSize(Math.max(80, size - 10))}>-</Button> 
-          <Button variant={"outline-"+mode} onClick={() => changeSize(Math.min(130, size + 10))}>+</Button> 
+          <Button variant={"outline-"+buttonMode} onClick={() => changeSize(Math.max(90, size - 10))}>-</Button> 
+          <Button variant={"outline-"+buttonMode} onClick={() => changeSize(Math.min(130, size + 10))}>+</Button>
+           
+      </div>
+      <div style={{ position: 'absolute', top: '101vh', right: '1rem', left: '1rem', textAlign: 'right', zIndex: 1}}>
+          <Button variant={"outline-"+buttonMode} onClick={() => changeMode()}>{mode === 'dark' ? 'light' : 'dark'}</Button>
+      </div>
+      <div style={{ position: 'absolute', top: '1rem', right: '1rem', left: '1rem', textAlign: 'center', zIndex: 1}}>
+        {/*eslint-disable-next-line*/}
+        <Button variant="outline-light" class="rounded-circle"><img width="90" height="90" src="/plsdonate.png"></img>
+        <p style={{color: 'white', padding: '0', margin: '0'}}>support my work~</p>
+        </Button>
       </div>
     </div>
   );
