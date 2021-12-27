@@ -2,11 +2,11 @@ import './App.css';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import FOG from 'vanta/dist/vanta.fog.min'
-import React, {useEffect, useState, useRef, ReactDOM} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 // eslint-disable-next-line
 import { Link, animateScroll as scroll } from "react-scroll";
 import { ReactReader, ReactReaderStyle } from 'react-reader';
-import { findDOMNode, unmountComponentAtNode } from 'react-dom';
+//import { findDOMNode, unmountComponentAtNode } from 'react-dom';
 
 let ownStyles = {
   ...ReactReaderStyle,
@@ -103,6 +103,7 @@ function App() {
   const [mode, setMode] = useState('Dark')
   const [buttonMode, setButtonMode] = useState('dark')
   const [selectedFile, setSelectedFile] = useState(0);
+  //eslint-disable-next-line
   const [filename, setFileName] = useState(filenames[selectedFile]);
   const [vantaEffect, setVantaEffect] = useState(0)
   const myRef = useRef(null)
@@ -154,8 +155,9 @@ function App() {
   const locationChanged = (epubcifi) => {
     // epubcifi is a internal string used by epubjs to point to a location in an epub. It looks like this: epubcfi(/6/6[titlepage]!/4/2/12[pgepubid00003]/3:0)
     setLocation(epubcifi)
-    // eslint-disable-next-line
+    
     if(renditionRef.current){
+      // eslint-disable-next-line
       const { displayed, href } = renditionRef.current.location.start
       setTotal(displayed.total)
       setPage(`${displayed.page} of ${displayed.total}`)
