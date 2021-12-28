@@ -33,7 +33,6 @@ let ownStyles = {
 const filenames = ['/SeasideScroll.epub', '/SeasideScroll1.epub', '/SeasideScroll2.epub', '/SeasideScroll3.epub']
 
 function MainReader(props){
-  
   if(props.selectedfile === 0){
     return (
       <ReactReader
@@ -44,6 +43,21 @@ function MainReader(props){
         styles={ownStyles}
         getRendition={(rendition) => {  
             props.renditionref.current = rendition
+            if(props.mode === 'Light'){
+              props.renditionref.current.themes.default({
+                body: {
+                  "background": "#282828 !important"
+                },
+                p: { 
+                  color: 'white !important', 
+                },
+                span: {
+                  color: 'white !important',
+                  "font-size": `${props.size}% !important`
+                },
+                "img": { "font-size": `${props.size}% !important`}, 
+              })
+            }
         }}
         ref={props.readerRef}
       ></ReactReader>
@@ -59,13 +73,28 @@ function MainReader(props){
         styles={ownStyles}
         getRendition={(rendition) => {  
             props.renditionref.current = rendition
+            if(props.mode === 'Light'){
+              props.renditionref.current.themes.default({
+                body: {
+                  "background": "#282828 !important"
+                },
+                p: { 
+                  color: 'white !important', 
+                },
+                span: {
+                  color: 'white !important',
+                  "font-size": `${props.size}% !important`
+                },
+                "img": { "font-size": `${props.size}% !important`}, 
+              })
+            }
         }}
         ref={props.readerRef}
       ></ReactReader>
     );
   }
   else if(props.selectedfile === 2){
-    /*return (
+    return (
       <ReactReader
         location={props.location}
         locationChanged={props.locationchanged}
@@ -74,11 +103,26 @@ function MainReader(props){
         styles={ownStyles}
         getRendition={(rendition) => {  
             props.renditionref.current = rendition
+            if(props.mode === 'Light'){
+              props.renditionref.current.themes.default({
+                body: {
+                  "background": "#282828 !important"
+                },
+                p: { 
+                  color: 'white !important', 
+                },
+                span: {
+                  color: 'white !important',
+                  "font-size": `${props.size}% !important`
+                },
+                "img": { "font-size": `${props.size}% !important`}, 
+              })
+            }
         }}
         ref={props.readerRef}
       ></ReactReader>
       
-    );*/
+    );
   }
   else if(props.selectedfile === 3){
     return (
@@ -90,6 +134,21 @@ function MainReader(props){
         styles={ownStyles}
         getRendition={(rendition) => {  
             props.renditionref.current = rendition
+            if(props.mode === 'Light'){
+              props.renditionref.current.themes.default({
+                body: {
+                  "background": "#282828 !important"
+                },
+                p: { 
+                  color: 'white !important', 
+                },
+                span: {
+                  color: 'white !important',
+                  fontSize: `${props.size}% !important`
+                },
+                "img": { "font-size": `${props.size}% !important`}, 
+              })
+            }
         }}
         ref={props.readerRef}
       ></ReactReader>
@@ -113,6 +172,8 @@ function App() {
   const [total, setTotal] = useState(null)
   const readerRef = useRef(null)
   const [tempState, setTempState] = useState(0);
+
+  
   const changeSize = (newSize) => {
     setSize(newSize)
   } 
@@ -165,8 +226,15 @@ function App() {
     
   }
   useEffect(() => {
-    setFileName(filenames[selectedFile]) 
-  }, [selectedFile])
+    //console.log(selectedFile, tempState)
+    
+    setFileName(filenames[selectedFile])
+    if(selectedFile > 3){
+      const set = () => { setSelectedFile(tempState) }
+      set();
+      //console.log(selectedFile)
+    } 
+  }, [selectedFile, tempState])
   useEffect(() => {
     if (!vantaEffect) {
       setVantaEffect(FOG({
@@ -194,7 +262,12 @@ function App() {
       renditionRef.current.themes.default({ 
         "img": { "font-size": `${size}% !important`},
         "span" : { "font-size": `${size}% !important`}
-      }) 
+      })
+      const yep = () => {// eslint-disable-next-line
+      const { displayed, href } = renditionRef.current.location.start
+      setTotal(displayed.total)
+      setPage(`${displayed.page} of ${displayed.total}`)}
+      yep()
   }},[size]) 
   return (
     <div className="App" ref={myRef}>
@@ -214,19 +287,18 @@ function App() {
         </Link>
       </header>
       <div style={{ height: "100vh", backgroundColor: "black", background: "black"}} className="start">
-        
-         
-        <MainReader settempstate={setTempState} selectedfile={selectedFile} location={location} locationchanged={locationChanged} renditionref={renditionRef} readerref={readerRef} tempstate={tempState}/>
-        
-        
+        <MainReader size={size} mode={mode} selectedfile={selectedFile} location={location} locationchanged={locationChanged} renditionref={renditionRef} readerref={readerRef}/>
       </div>
       <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'left', zIndex: 1}}>
           <Button variant={"outline-"+buttonMode} onClick={() => changeSize(Math.max(90, size - 10))}>-</Button> 
           <Button variant={"outline-"+buttonMode} onClick={() => changeSize(Math.min(130, size + 10))}>+</Button>
-          {(parseInt(page) === parseInt(total) || Math.abs(parseInt(page) - parseInt(total)) <= 2) ? 
-          <span><Button variant={"outline-"+buttonMode} onClick={() => setSelectedFile(1) }>1</Button>
-          <Button variant={"outline-"+buttonMode} onClick={() => setSelectedFile(2) }>2</Button>
-          <Button variant={"outline-"+buttonMode} onClick={() => setSelectedFile(3) && setTempState(0) }>3</Button></span>: null} 
+          
+      </div>
+      <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'center', zIndex: 1}}>
+        {(parseInt(page) === parseInt(total) || Math.abs(parseInt(page) - parseInt(total)) <= 2) ? 
+          <span><Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(1)}}>1</Button>
+          <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(2)} } >2</Button>
+          <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(3)} }>3</Button></span>: null} 
       </div>
       <div style={{ position: 'absolute', top: '101vh', right: '1rem', left: '1rem', textAlign: 'right', zIndex: 2}}>
           <Button variant={"outline-"+buttonMode} onClick={() => changeMode()}>{mode === 'Dark' ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brightness-high" viewBox="0 0 16 16">
