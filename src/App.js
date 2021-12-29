@@ -172,7 +172,6 @@ function App() {
   const [total, setTotal] = useState(null)
   const readerRef = useRef(null)
   const [tempState, setTempState] = useState(0);
-
   
   const changeSize = (newSize) => {
     setSize(newSize)
@@ -295,10 +294,14 @@ function App() {
           
       </div>
       <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'center', zIndex: 1}}>
-        {(parseInt(page) === parseInt(total) || Math.abs(parseInt(page) - parseInt(total)) <= 2) ? 
-          <span><Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(1)}}>1</Button>
-          <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(2)} } >2</Button>
-          <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(3)} }>3</Button></span>: null} 
+        {(parseInt(page) === parseInt(total) || Math.abs(parseInt(page) - parseInt(total)) <= 2) && selectedFile === 0 ? 
+          <span><Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(1)}}>Option 1</Button>
+          <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(2)} }>Option 2</Button>
+          <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(3)} }>Option 3</Button></span>: null} 
+      </div>
+      <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'center', zIndex: 1}}>
+        {(parseInt(page) === parseInt(total) || Math.abs(parseInt(page) - parseInt(total)) <= 2) && selectedFile !== 0 ? 
+          <span><Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(0);}}>Return</Button></span>: null} 
       </div>
       <div style={{ position: 'absolute', top: '101vh', right: '1rem', left: '1rem', textAlign: 'right', zIndex: 2}}>
           <Button variant={"outline-"+buttonMode} onClick={() => changeMode()}>{mode === 'Dark' ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brightness-high" viewBox="0 0 16 16">
