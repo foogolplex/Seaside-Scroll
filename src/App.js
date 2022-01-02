@@ -6,6 +6,7 @@ import React, {useEffect, useState, useRef} from 'react';
 // eslint-disable-next-line
 import { Link, animateScroll as scroll } from "react-scroll";
 import { ReactReader, ReactReaderStyle } from 'react-reader';
+
 //import { findDOMNode, unmountComponentAtNode } from 'react-dom';
 
 let ownStyles = {
@@ -24,19 +25,19 @@ let ownStyles = {
 // If page is the last one and the selected file is the 0th then render 3 buttons x
 // Each button has an onclick function that changes the selected file state x
 // If the file state changes then UseEffect will detect this x
-// Editing the currentfile state which should rerender the Reactreader component
+// Editing the currentfile state which should rerender the Reactreader component x
 // I also need to report the location of the epubcifi at the last page and save it to a variable
 // if the page is the last one and the selected file isn't the 0th then render a button to change back to base state
 // if changing back to the base state then somehow rendition.display(old reported location)
 
 
-const filenames = ['/SeasideScroll.epub', '/SeasideScroll1.epub', '/SeasideScroll2.epub', '/SeasideScroll3.epub']
+const filenames = ['/SeasideScroll.epub', '/SeasideScroll1.epub', '/SeasideScroll2.epub', '/SeasideScroll3.epub', '/SeasideScroll4.epub']
 
 function MainReader(props){
   if(props.selectedfile === 0){
     return (
       <ReactReader
-        location={props.location}
+        location={props.old}
         locationChanged={props.locationchanged}
         url={filenames[0]} 
         showToc={false}
@@ -53,6 +54,21 @@ function MainReader(props){
                 },
                 span: {
                   color: 'white !important',
+                  "font-size": `${props.size}% !important`
+                },
+                "img": { "font-size": `${props.size}% !important`}, 
+              })
+            }
+            else if(props.mode === 'Dark'){
+              props.renditionref.current.themes.default({
+                body: {
+                  "background": "white !important"
+                },
+                p: { 
+                  color: 'black !important', 
+                },
+                span: {
+                  color: 'black !important',
                   "font-size": `${props.size}% !important`
                 },
                 "img": { "font-size": `${props.size}% !important`}, 
@@ -88,6 +104,21 @@ function MainReader(props){
                 "img": { "font-size": `${props.size}% !important`}, 
               })
             }
+            else if(props.mode === 'Dark'){
+              props.renditionref.current.themes.default({
+                body: {
+                  "background": "white !important"
+                },
+                p: { 
+                  color: 'black !important', 
+                },
+                span: {
+                  color: 'black !important',
+                  "font-size": `${props.size}% !important`
+                },
+                "img": { "font-size": `${props.size}% !important`}, 
+              })
+            }
         }}
         ref={props.readerRef}
       ></ReactReader>
@@ -113,6 +144,21 @@ function MainReader(props){
                 },
                 span: {
                   color: 'white !important',
+                  "font-size": `${props.size}% !important`
+                },
+                "img": { "font-size": `${props.size}% !important`}, 
+              })
+            }
+            else if(props.mode === 'Dark'){
+              props.renditionref.current.themes.default({
+                body: {
+                  "background": "white !important"
+                },
+                p: { 
+                  color: 'black !important', 
+                },
+                span: {
+                  color: 'black !important',
                   "font-size": `${props.size}% !important`
                 },
                 "img": { "font-size": `${props.size}% !important`}, 
@@ -144,7 +190,22 @@ function MainReader(props){
                 },
                 span: {
                   color: 'white !important',
-                  fontSize: `${props.size}% !important`
+                  "font-size": `${props.size}% !important`
+                },
+                "img": { "font-size": `${props.size}% !important`}, 
+              })
+            }
+            else if(props.mode === 'Dark'){
+              props.renditionref.current.themes.default({
+                body: {
+                  "background": "white !important"
+                },
+                p: { 
+                  color: 'black !important', 
+                },
+                span: {
+                  color: 'black !important',
+                  "font-size": `${props.size}% !important`
                 },
                 "img": { "font-size": `${props.size}% !important`}, 
               })
@@ -154,6 +215,52 @@ function MainReader(props){
       ></ReactReader>
     );
   }
+  else if(props.selectedfile === 4){
+    return (
+      <ReactReader
+        location={props.location}
+        locationChanged={props.locationchanged}
+        url={filenames[4]} 
+        showToc={false}
+        styles={ownStyles}
+        getRendition={(rendition) => {  
+            props.renditionref.current = rendition
+            if(props.mode === 'Light'){
+              props.renditionref.current.themes.default({
+                body: {
+                  "background": "#282828 !important"
+                },
+                p: { 
+                  color: 'white !important', 
+                },
+                span: {
+                  color: 'white !important',
+                  "font-size": `${props.size}% !important`
+                },
+                "img": { "font-size": `${props.size}% !important`}, 
+              })
+            }
+            else if(props.mode === 'Dark'){
+              props.renditionref.current.themes.default({
+                body: {
+                  "background": "white !important"
+                },
+                p: { 
+                  color: 'black !important', 
+                },
+                span: {
+                  color: 'black !important',
+                  "font-size": `${props.size}% !important`
+                },
+                "img": { "font-size": `${props.size}% !important`}, 
+              })
+            }
+        }}
+        ref={props.readerRef}
+      ></ReactReader>
+    );
+  }
+  
   return (null);
 }
 
@@ -167,12 +274,23 @@ function App() {
   const [vantaEffect, setVantaEffect] = useState(0)
   const myRef = useRef(null)
   const [location, setLocation] = useState(null);
-  const [size, setSize] = useState(100)
+  const [size, setSize] = useState(window.innerWidth > 899 ? 130 : 90)
   const renditionRef = useRef(null)
   const [total, setTotal] = useState(null)
   const readerRef = useRef(null)
   const [tempState, setTempState] = useState(0);
+  //eslint-disable-next-line
+  const [old, setOld] = useState(null);
   
+
+  const getMax = () => {
+    if(window.innerWidth < 900){
+      return 0; 
+    }
+    else{
+      return 2;
+    }
+  }
   const changeSize = (newSize) => {
     setSize(newSize)
   } 
@@ -216,14 +334,15 @@ function App() {
     // epubcifi is a internal string used by epubjs to point to a location in an epub. It looks like this: epubcfi(/6/6[titlepage]!/4/2/12[pgepubid00003]/3:0)
     setLocation(epubcifi)
     
-    if(renditionRef.current){
-      // eslint-disable-next-line
-      const { displayed, href } = renditionRef.current.location.start
-      setTotal(displayed.total)
-      setPage(`${displayed.page} of ${displayed.total}`)
-    }
+    
+    // eslint-disable-next-line
+    const { displayed, href } = renditionRef.current.location.start
+    setTotal(displayed.total)
+    const displaytotal = getMax() === 0 || parseInt(displayed.total) === 2 ? displayed.total : (parseInt(displayed.total) - 2).toString()
+    setPage(`${displayed.page} of ${displaytotal}`)
     
   }
+  
   useEffect(() => {
     //console.log(selectedFile, tempState)
     
@@ -231,6 +350,7 @@ function App() {
     if(selectedFile > 3){
       const set = () => { setSelectedFile(tempState) }
       set();
+       setFileName(filenames[selectedFile])
       //console.log(selectedFile)
     } 
   }, [selectedFile, tempState])
@@ -262,46 +382,62 @@ function App() {
         "img": { "font-size": `${size}% !important`},
         "span" : { "font-size": `${size}% !important`}
       })
-      const yep = () => {// eslint-disable-next-line
-      const { displayed, href } = renditionRef.current.location.start
-      setTotal(displayed.total)
-      setPage(`${displayed.page} of ${displayed.total}`)}
-      yep()
-  }},[size]) 
+      
+      
+  }},[size])
+  
   return (
+    
     <div className="App" ref={myRef}>
-      <header className="App-header">
-        <h1 className="display-1">Seaside Scroll</h1>
-        <h3 className="display-5">By Alexandra Kirzhnev</h3>
+      <header className="App-header" style={{paddingBottom: '5vmin'}}>
         
-        <Link
-          activeClass="active"
-          to="start"
-          spy={true}
-          smooth={true}
-          offset={0}
-          duration={10}
-        >
-        <Button size="lg" style={{marginTop: "20px"}} variant="outline-light">Begin</Button> 
-        </Link>
+        <h1 id="Header">~Seaside Scroll~</h1>
+        
+        <h3 id="Author">By Alexandra Kirzhnev</h3>
+        <div style={{ position: 'absolute', top: '80vh', right: '1rem', left: '1rem', textAlign: 'center', zIndex: 1}}>
+        
+          <Link
+            activeClass="active"
+            to="start"
+            spy={true}
+            smooth={true}
+            offset={0}
+            duration={10}
+          >
+          
+          <Button size="lg" style={{marginTop: "20px", fontSize: "calc(10px + 4vmin)"}} variant="outline-light">↓</Button>
+          
+          </Link>
+          
+        </div>
+        
       </header>
-      <div style={{ height: "100vh", backgroundColor: "black", background: "black"}} className="start">
-        <MainReader size={size} mode={mode} selectedfile={selectedFile} location={location} locationchanged={locationChanged} renditionref={renditionRef} readerref={readerRef}/>
+      
+      <div id="reader" style={{ height: "100vh", backgroundColor: "black", background: "black"}} className="start">
+        
+        <MainReader old={old} size={size} mode={mode} selectedfile={selectedFile} location={location} locationchanged={locationChanged} renditionref={renditionRef} readerref={readerRef}/>
+         
       </div>
+     
       <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'left', zIndex: 1}}>
           <Button variant={"outline-"+buttonMode} onClick={() => changeSize(Math.max(90, size - 10))}>-</Button> 
           <Button variant={"outline-"+buttonMode} onClick={() => changeSize(Math.min(130, size + 10))}>+</Button>
           
       </div>
-      <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'center', zIndex: 1}}>
-        {(parseInt(page) === parseInt(total) || Math.abs(parseInt(page) - parseInt(total)) <= 2) && selectedFile === 0 ? 
-          <span><Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(1)}}>Option 1</Button>
-          <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(2)} }>Option 2</Button>
-          <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(3)} }>Option 3</Button></span>: null} 
+      <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'center', zIndex: 2}}>
+        {(parseInt(page) === parseInt(total) || Math.abs(parseInt(page) - parseInt(total)) <= getMax()) && selectedFile === 0 ? 
+        
+    <span style={{fontFamily: 'Times New Roman'}}>
+    <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(5); setTempState(1)}}>1</Button>
+    <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(5); setTempState(2)}}>2</Button>
+    <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(5); setTempState(3)}}>3</Button>
+    <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(5); setTempState(4)}}>4</Button>
+  </span>
+: null} 
       </div>
       <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'center', zIndex: 1}}>
-        {(parseInt(page) === parseInt(total) || Math.abs(parseInt(page) - parseInt(total)) <= 2) && selectedFile !== 0 ? 
-          <span><Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(0);}}>Return</Button></span>: null} 
+        {(parseInt(page) === parseInt(total) || Math.abs(parseInt(page) - parseInt(total)) <= getMax()) && selectedFile !== 0 ? 
+          <span><Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(0); locationChanged(location); console.log(old)}}>Return</Button></span>: null} 
       </div>
       <div style={{ position: 'absolute', top: '101vh', right: '1rem', left: '1rem', textAlign: 'right', zIndex: 2}}>
           <Button variant={"outline-"+buttonMode} onClick={() => changeMode()}>{mode === 'Dark' ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brightness-high" viewBox="0 0 16 16">
@@ -312,15 +448,20 @@ function App() {
           </Button>
       </div>
       <div style={{ position: 'absolute', top: '101vh', right: '1rem', left: '1rem', textAlign: 'center', zIndex: 1}}>
-          <span style={mode === 'Dark' ? {color: 'black'} : {color: 'white'}}>{page}</span> 
+          <span style={mode === 'Dark' ? {color: 'black', fontFamily: 'Times New Roman'} : {color: 'white', fontFamily: 'Times New Roman'}}>{page}</span> 
       </div>
+      
       <div style={{ position: 'absolute', top: '1rem', right: '1rem', left: '1rem', textAlign: 'center', zIndex: 1}}>
-          {/*eslint-disable-next-line*/}
-          <Button variant="outline-light" class="rounded-circle"><img width="120" height="120" src="/plsdonate.png"></img>
-            <p style={{color: 'white', padding: '0', margin: '0'}}>support my work~</p>
+          {/*eslint-disable-next-line */} 
+          <Button variant="outline-light" class="rounded-circle"><img width="100" height="100" src="/plsdonate.png"></img>
+            <p style={{padding: '0', margin: '0'}}>support my work~</p>
           </Button>
+          
       </div>
+      
+
     </div>
+    
   );
 }
 
