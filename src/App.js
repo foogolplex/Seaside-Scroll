@@ -338,8 +338,8 @@ function App() {
     // eslint-disable-next-line
     const { displayed, href } = renditionRef.current.location.start
     setTotal(displayed.total)
-    const displaytotal = getMax() === 0 || parseInt(displayed.total) === 2 ? displayed.total : (parseInt(displayed.total) - 2).toString()
-    setPage(`${displayed.page} of ${displaytotal}`)
+    //const displaytotal = getMax() === 0 || parseInt(displayed.total) === 2 ? displayed.total : (parseInt(displayed.total) - 2).toString()
+    setPage(`${displayed.page} of ${displayed.total}`)
     
   }
   
