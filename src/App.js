@@ -65,10 +65,10 @@ function MainReader(props){
                   "background": "white !important"
                 },
                 p: { 
-                  color: 'black !important', 
+                  /*color: 'black !important',*/ 
                 },
                 span: {
-                  color: 'black !important',
+                  /*color: 'black !important',*/
                   "font-size": `${props.size}% !important`
                 },
                 "img": { "font-size": `${props.size}% !important`}, 
@@ -428,16 +428,16 @@ function App() {
         {(parseInt(page) === parseInt(total) || Math.abs(parseInt(page) - parseInt(total)) <= getMax()) && selectedFile === 0 ? 
         
     <span style={{fontFamily: 'Times New Roman'}}>
-    <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(5); setTempState(1)}}>1</Button>
-    <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(5); setTempState(2)}}>2</Button>
-    <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(5); setTempState(3)}}>3</Button>
-    <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(5); setTempState(4)}}>4</Button>
+    <Button id="Options1" variant={"outline-"+buttonMode} style={{color: '#00008b', borderColor: '#00008b'}} onClick={() => {setSelectedFile(5); setTempState(1)}}>1</Button>
+    <Button id="Options2" variant={"outline-"+buttonMode} style={{color: '#6495ED', borderColor: '#6495ED'}} onClick={() => {setSelectedFile(5); setTempState(2)}}>2</Button>
+    <Button id="Options3" variant={"outline-"+buttonMode} style={{color: '#89CFF0', borderColor: '#89CFF0'}} onClick={() => {setSelectedFile(5); setTempState(3)}}>3</Button>
+    <Button id="Options4" variant={"outline-"+buttonMode} style={{color: '#26428b', borderColor: '#26428b'}} onClick={() => {setSelectedFile(5); setTempState(4)}}>4</Button>
   </span>
 : null} 
       </div>
       <div style={{ position: 'absolute', bottom: '1rem', right: '1rem', left: '1rem', textAlign: 'center', zIndex: 1}}>
         {(parseInt(page) === parseInt(total) || Math.abs(parseInt(page) - parseInt(total)) <= getMax()) && selectedFile !== 0 ? 
-          <span><Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(0); locationChanged(location); console.log(old)}}>Return</Button></span>: null} 
+          <span><Button style={{fontFamily: 'Times New Roman'}} variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(4); setTempState(0); locationChanged(location); console.log(old)}}>Return</Button></span>: null} 
       </div>
       <div style={{ position: 'absolute', top: '101vh', right: '1rem', left: '1rem', textAlign: 'right', zIndex: 2}}>
           <Button variant={"outline-"+buttonMode} onClick={() => changeMode()}>{mode === 'Dark' ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-brightness-high" viewBox="0 0 16 16">

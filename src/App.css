@@ -5,6 +5,18 @@
   text-align: center;
 }
 
+#Options1:hover {
+  background-color: #00008b !important;
+}
+#Options2:hover {
+  background-color: #6495ED !important;
+}
+#Options3:hover {
+  background-color: #89CFF0 !important;
+}
+#Options4:hover {
+  background-color: #26428b !important;
+}
 #Header {
   font-family: 'Amatic SC', cursive;
   font-size: calc(15px + 20vmin);
