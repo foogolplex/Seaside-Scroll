@@ -428,10 +428,10 @@ function App() {
         {(parseInt(page) === parseInt(total) || Math.abs(parseInt(page) - parseInt(total)) <= getMax()) && selectedFile === 0 ? 
         
     <span style={{fontFamily: 'Times New Roman'}}>
-    <Button id="Options1" variant={"outline-"+buttonMode} style={{color: '#00008b', borderColor: '#00008b'}} onClick={() => {setSelectedFile(5); setTempState(1)}}>1</Button>
-    <Button id="Options2" variant={"outline-"+buttonMode} style={{color: '#6495ED', borderColor: '#6495ED'}} onClick={() => {setSelectedFile(5); setTempState(2)}}>2</Button>
-    <Button id="Options3" variant={"outline-"+buttonMode} style={{color: '#89CFF0', borderColor: '#89CFF0'}} onClick={() => {setSelectedFile(5); setTempState(3)}}>3</Button>
-    <Button id="Options4" variant={"outline-"+buttonMode} style={{color: '#26428b', borderColor: '#26428b'}} onClick={() => {setSelectedFile(5); setTempState(4)}}>4</Button>
+    <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(5); setTempState(1)}}>1</Button>
+    <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(5); setTempState(2)}}>2</Button>
+    <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(5); setTempState(3)}}>3</Button>
+    <Button variant={"outline-"+buttonMode} onClick={() => {setSelectedFile(5); setTempState(4)}}>4</Button>
   </span>
 : null} 
       </div>
